@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         /* Ensure html and body take up full height and remove any margin or padding */
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -21,9 +23,11 @@
 
         /* Ensure model-viewer takes up full height and width of the body */
         model-viewer {
+            border: solid #000000 1px;
             width: 100%;
             height: 100%;
-            background-color: #eee;
+            /* background-color: #eee; */
+            border-radius: 20px;
             overflow-x: hidden;
             position: relative;
 
@@ -48,7 +52,8 @@
             line-height: 36px;
             border-radius: 18px;
             border: 1px solid #DADCE0;
-            z-index: 10; /* Ensure the button is above other elements */
+            z-index: 10;
+            /* Ensure the button is above other elements */
         }
 
         #ar-button:active {
@@ -64,16 +69,26 @@
         }
 
         @keyframes circle {
-            from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
-            to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+            from {
+                transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
+            }
+
+            to {
+                transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg);
+            }
         }
 
         @keyframes elongate {
-            from { transform: translateX(100px); }
-            to   { transform: translateX(-100px); }
+            from {
+                transform: translateX(100px);
+            }
+
+            to {
+                transform: translateX(-100px);
+            }
         }
 
-        model-viewer > #ar-prompt {
+        model-viewer>#ar-prompt {
             position: absolute;
             left: 50%;
             bottom: 175px;
@@ -81,15 +96,15 @@
             display: none;
         }
 
-        model-viewer[ar-status="session-started"] > #ar-prompt {
+        model-viewer[ar-status="session-started"]>#ar-prompt {
             display: block;
         }
 
-        model-viewer > #ar-prompt > img {
+        model-viewer>#ar-prompt>img {
             animation: circle 4s linear infinite;
         }
 
-        model-viewer > #ar-failure {
+        model-viewer>#ar-failure {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -97,7 +112,7 @@
             display: none;
         }
 
-        model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+        model-viewer[ar-tracking="not-tracking"]>#ar-failure {
             display: block;
         }
 
@@ -105,13 +120,19 @@
             width: 100%;
             text-align: center;
             overflow: hidden;
-            position: absolute;
-            bottom: 16px;
+            position: relative;
+            /* bottom: 16px; */
+            flex-shrink: 0;
+        }
+
+        @media screen and (min-width: 720px) {
+            justify-content: center;
         }
 
         .slides {
+            left: 0;
             display: flex;
-            justify-content: center;
+            /* justify-content: center; */
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
@@ -126,10 +147,10 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            background-color: #fff;
+            /* background-color: #fff; */
+            border: solid #000000 1px;
             margin-right: 10px;
             border-radius: 10px;
-            border: none;
             display: flex;
         }
 
@@ -144,43 +165,65 @@
         .slide:focus-visible {
             outline: 1px solid #4285f4;
         }
+
+        wrapper {
+            height: calc(100% - 40px);
+            width: calc(100% - 40px);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
     </style>
 </head>
+
 <body>
+    <wrapper>
+        <model-viewer src="assets/ShopifyModels/african_mask.glb" poster="assets/ShopifyModels/african_mask.webp"
+            tone-mapping="neutral" shadow-intensity="1" ar camera-controls touch-action="pan-y"
+            alt="A 3D model carousel">
 
-<model-viewer src="assets/ShopifyModels/african_mask.glb" poster="assets/ShopifyModels/african_mask.webp" tone-mapping="neutral" shadow-intensity="1" ar camera-controls touch-action="pan-y" alt="A 3D model carousel">
-  
-    <button slot="ar-button" id="ar-button">
-        Visualiser dans votre espace
-    </button>
-  
-    <div id="ar-prompt">
-        <img src="assets/hand.png">
-    </div>
-  
-    <button id="ar-failure">
-        AR is not tracking!
-    </button>
-  
+            <button slot="ar-button" id="ar-button">
+                Visualiser dans votre espace
+            </button>
 
-<div class="slider">
-    <div class="slides">
-        <button class="slide selected" onclick="switchSrc(this, 'african_drum')" style="background-image: url('assets/ShopifyModels/african_drum.webp');"></button>
-        <button class="slide" onclick="switchSrc(this, 'african_figurine')" style="background-image: url('assets/ShopifyModels/african_figurine.webp');"></button>
-        <button class="slide" onclick="switchSrc(this, 'african_mask')" style="background-image: url('assets/ShopifyModels/african_mask.webp');"></button>
-        <button class="slide" onclick="switchSrc(this, 'aglaonema_plant')" style="background-image: url('assets/ShopifyModels/aglaonema_plant.webp');"></button>
-        <button class="slide" onclick="switchSrc(this, 'nigerian_vase')" style="background-image: url('assets/ShopifyModels/nigerian_vase.webp');"></button>
-        <button class="slide" onclick="switchSrc(this, 'old_soviet_chair')" style="background-image: url('assets/ShopifyModels/old_soviet_chair.webp');"></button>
-        <button class="slide" onclick="switchSrc(this, 'sofa')" style="background-image: url('assets/ShopifyModels/sofa.webp');"></button>
-        <button class="slide" onclick="switchSrc(this, 'vase')" style="background-image: url('assets/ShopifyModels/vase.webp');"></button>
-    </div>
-</div>
+            <div id="ar-prompt">
+                <img src="assets/hand.png">
+            </div>
+
+            <button id="ar-failure">
+                AR is not tracking!
+            </button>
+
+        </model-viewer>
+
+        <div class="slider">
+            <div class="slides">
+                <button class="slide selected" onclick="switchSrc(this, 'african_drum')"
+                    style="background-image: url('assets/ShopifyModels/african_drum.webp');"></button>
+                <button class="slide" onclick="switchSrc(this, 'african_figurine')"
+                    style="background-image: url('assets/ShopifyModels/african_figurine.webp');"></button>
+                <button class="slide" onclick="switchSrc(this, 'african_mask')"
+                    style="background-image: url('assets/ShopifyModels/african_mask.webp');"></button>
+                <button class="slide" onclick="switchSrc(this, 'aglaonema_plant')"
+                    style="background-image: url('assets/ShopifyModels/aglaonema_plant.webp');"></button>
+                <button class="slide" onclick="switchSrc(this, 'nigerian_vase')"
+                    style="background-image: url('assets/ShopifyModels/nigerian_vase.webp');"></button>
+                <button class="slide" onclick="switchSrc(this, 'old_soviet_chair')"
+                    style="background-image: url('assets/ShopifyModels/old_soviet_chair.webp');"></button>
+                <button class="slide" onclick="switchSrc(this, 'sofa')"
+                    style="background-image: url('assets/ShopifyModels/sofa.webp');"></button>
+                <button class="slide" onclick="switchSrc(this, 'vase')"
+                    style="background-image: url('assets/ShopifyModels/vase.webp');"></button>
+            </div>
+        </div>
+    </wrapper>
 
 
-</model-viewer>
 
-<script type="module">
-    const modelViewer = document.querySelector("model-viewer");
+    <script type="module">
+        const modelViewer = document.querySelector("model-viewer");
 
     window.switchSrc = (element, name) => {
         const base = "assets/ShopifyModels/" + name;
@@ -198,4 +241,5 @@
 </script>
 
 </body>
+
 </html>
