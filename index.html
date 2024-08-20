@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Model Viewer</title>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script defer="defer" type="text/javascript" src="https://fmxstudio.odoo.com/im_livechat/loader/2"></script>
+            
+    <script defer="defer" type="text/javascript" src="https://fmxstudio.odoo.com/im_livechat/assets_embed.js"></script>
     <style>
         /* Ensure html and body take up full height and remove any margin or padding */
         html,
@@ -23,7 +26,7 @@
 
         /* Ensure model-viewer takes up full height and width of the body */
         model-viewer {
-            border: solid #000000 1px;
+            /* border: solid #d5e6e941 1px; */
             width: 100%;
             height: 100%;
             /* background-color: #eee; */
@@ -150,7 +153,7 @@
             background-repeat: no-repeat;
             background-position: center;
             /* background-color: #fff; */
-            border: solid #000000 1px;
+            border: solid #fcf0f025 1px;
             margin-right: 10px;
             border-radius: 10px;
             display: flex;
@@ -168,7 +171,7 @@
             outline: 1px solid #4285f4;
         }
 
-        wrapper {
+        .wrapper {
             height: calc(100% - 40px);
             width: calc(100% - 40px);
             padding: 20px;
@@ -181,7 +184,7 @@
 </head>
 
 <body>
-    <wrapper>
+    <wrapper class="wrapper">
         <model-viewer src="assets/ShopifyModels/african_drum.glb" poster="assets/ShopifyModels/african_drum.webp"
             tone-mapping="neutral" shadow-intensity="1" ar camera-controls touch-action="pan-y"
             alt="A 3D model carousel">
